@@ -1,0 +1,15 @@
+.card-container {
+    display: flex;
+    width: 40%;
+    margin: 0 auto;
+}
+.accordion {
+    width: 100%;
+}
+.card-sun-state {
+    display: flex;
+    flex-direction: column;
+}
+.card-temperature span {
+    padding: 0 10px 0 0;
+}
