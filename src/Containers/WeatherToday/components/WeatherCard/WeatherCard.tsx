@@ -4,22 +4,14 @@ import 'materialize-css/dist/css/materialize.css';
 import 'materialize-css/dist/js/materialize';
 import './css/style.css';
 
-interface WeatherStateInterface {
-    cityTitle: string,
-    humidity: string,
-    feelsLike: number,
-    temperature: number,
-    pressure: number,
-    timeSunrise: string,
-    timeSunset: string
-}
-
 type WeatherCardType = {
-    weather: WeatherStateInterface
+    sunrise: string,
+    sunset: string,
+    weatherState: object
 }
 
-export const WeatherCard = ({weather}: WeatherCardType): JSX.Element => {
-    const {humidity, feelsLike, cityTitle, temperature, pressure, timeSunset, timeSunrise}: WeatherStateInterface = weather
+export const WeatherCard = ({sunset, sunrise, weatherState}: WeatherCardType): JSX.Element => {
+    const {humidity, feelsLike, cityTitle, temperature, pressure}: any = weatherState
     return (
         <div className='card-container'>
             <div className='accordion'>
@@ -42,8 +34,8 @@ export const WeatherCard = ({weather}: WeatherCardType): JSX.Element => {
                                 <span>Давление: {pressure} мм рт ст</span>
                             </div>
                             <div className='card-sun-state'>
-                                <span>Восход солнца: {timeSunrise}</span>
-                                <span>Закат: {timeSunset}</span>
+                                <span>Восход солнца: {sunrise}</span>
+                                <span>Закат: {sunset}</span>
                             </div>
                         </Card>
                     </Col>
