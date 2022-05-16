@@ -1,38 +1,50 @@
-import axios, {AxiosResponse} from "axios";
-import {apiKEY} from "../apiKey.env";
+import axios, {AxiosResponse} from 'axios';
+import {apiKEY} from '../apiKey.env';
 
-export async function autoLocationWeatherDisplay(longitude: number, latitude: number) {
+export async function getWeatherByCoords(longitude: number, latitude: number) {
     try {
-        console.log(longitude, latitude)
-        const response: AxiosResponse = await axios.get(`https://api.openweathermap.org/data/2.5/weather?&lat=${latitude}&lon=${longitude}&units=metric&appid=${apiKEY}&lang=ru`)
-        return responseHandler(response)
+        const response: AxiosResponse<WeatherResponse> = await axios.get(`https://api.openweathermap.org/data/2.5/weather?&lat=${latitude}&lon=${longitude}&units=metric&appid=${apiKEY}&lang=ru`)
+        return responseHandler(response.data)
     }
-    catch (err) {
-        console.log(`Ошибка:${err}`)
+    catch (err: unknown) {
+        console.log(`Ошибка: ${JSON.stringify(err)}`)
     }
 }
 
-export async function getWeatherToday(cityTitleValue: string) {
+export async function getWeatherByCity(cityTitle: string) {
     try {
-        const response:AxiosResponse = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${cityTitleValue}&units=metric&appid=${apiKEY}&lang=ru`)
-            return responseHandler(response)
+        const response:AxiosResponse<WeatherResponse> = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${cityTitle}&units=metric&appid=${apiKEY}&lang=ru`)
+        return responseHandler(response.data)
     } catch (err) {
-        console.log(`Ошикба:${err}`)
+        console.log(`Ошикба: ${JSON.stringify(err)}`)
     }
 }
 
-function responseHandler(response?: AxiosResponse | undefined) {
-    const sunrise: number = response?.data.sys.sunrise
-    const sunset: number = response?.data.sys.sunset
-    const cityTitle: string = response?.data.name
-    const humidity: string = response?.data.main.humidity
-    const feelsLike = Math.round(response?.data.main.feels_like)
-    const temperature = Math.round(response?.data.main.temp)
-    const pressure: number = response?.data.main.pressure
-    const weatherState = {cityTitle, humidity, feelsLike, temperature, pressure}
+interface WeatherResponse {
+    sys: {
+        sunrise: number;
+        sunset: number;
+    };
+    name: string;
+    main: {
+        humidity: string;
+        feels_like: number;
+        temp: number;
+        pressure: number;
+    }
+}
+
+function responseHandler(response: WeatherResponse) {
+    const sunrise: number = response.sys.sunrise
+    const sunset: number = response.sys.sunset
+    const cityTitle: string = response.name
+    const humidity: string = response.main.humidity
+    const feelsLike = Math.round(response.main.feels_like)
+    const temperature = Math.round(response.main.temp)
+    const pressure: number = response.main.pressure
     const timeSunrise = convertTimeSunrise(sunrise)
     const timeSunset = convertTimeSunset(sunset)
-    return {...weatherState, timeSunset, timeSunrise}
+    return {cityTitle, humidity, feelsLike, temperature, pressure, timeSunset, timeSunrise}
 }
 
 function convertTimeSunrise(time: number) {
@@ -40,7 +52,7 @@ function convertTimeSunrise(time: number) {
     const hours = date.getHours()
     const minutes = date.getMinutes()
     const seconds = date.getSeconds()
-    return convertTimeHandler(hours, minutes, seconds)
+    return timeFormatter(hours, minutes, seconds)
 }
 
 function convertTimeSunset(time: number) {
@@ -48,9 +60,9 @@ function convertTimeSunset(time: number) {
     const hours = date.getHours()
     const minutes = date.getMinutes()
     const seconds = date.getSeconds()
-    return convertTimeHandler(hours, minutes, seconds)
+    return timeFormatter(hours, minutes, seconds)
 }
 
-function convertTimeHandler(hours: number, minutes: number, seconds: number) {
+function timeFormatter(hours: number, minutes: number, seconds: number) {
     return `${hours}:${minutes}:${seconds}`
 }

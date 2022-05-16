@@ -1,6 +1,6 @@
-import React from "react";
-import {Col, Preloader, Row} from "react-materialize";
-import "./css/style.css";
+import React from 'react';
+import {Col, Preloader, Row} from 'react-materialize';
+import './css/style.css';
 
 export const PreloaderComponent = (): JSX.Element => {
     return (

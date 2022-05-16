@@ -1,10 +1,10 @@
-import React from "react";
-import {Card, Col, Icon, Row} from "react-materialize";
-import "materialize-css/dist/css/materialize.css";
-import "materialize-css/dist/js/materialize";
-import "./css/style.css";
+import React from 'react';
+import {Card, Col, Icon, Row} from 'react-materialize';
+import 'materialize-css/dist/css/materialize.css';
+import 'materialize-css/dist/js/materialize';
+import './css/style.css';
 
-interface weatherStateInterface {
+interface WeatherStateInterface {
     cityTitle: string,
     humidity: string,
     feelsLike: number,
@@ -15,11 +15,11 @@ interface weatherStateInterface {
 }
 
 type WeatherCardType = {
-    weather: weatherStateInterface
+    weather: WeatherStateInterface
 }
 
 export const WeatherCard = ({weather}: WeatherCardType): JSX.Element => {
-    const {humidity, feelsLike, cityTitle, temperature, pressure, timeSunset, timeSunrise}: weatherStateInterface = weather
+    const {humidity, feelsLike, cityTitle, temperature, pressure, timeSunset, timeSunrise}: WeatherStateInterface = weather
     return (
         <div className='card-container'>
             <div className='accordion'>
