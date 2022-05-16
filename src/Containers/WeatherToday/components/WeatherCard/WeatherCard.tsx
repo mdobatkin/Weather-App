@@ -1,17 +1,25 @@
 import React from "react";
 import {Card, Col, Icon, Row} from "react-materialize";
-import 'materialize-css/dist/css/materialize.css';
-import 'materialize-css/dist/js/materialize';
-import './css/style.css';
+import "materialize-css/dist/css/materialize.css";
+import "materialize-css/dist/js/materialize";
+import "./css/style.css";
 
-type WeatherCardType = {
-    sunrise: string,
-    sunset: string,
-    weatherState: object
+interface weatherStateInterface {
+    cityTitle: string,
+    humidity: string,
+    feelsLike: number,
+    temperature: number,
+    pressure: number,
+    timeSunrise: string,
+    timeSunset: string
 }
 
-export const WeatherCard = ({sunset, sunrise, weatherState}: WeatherCardType): JSX.Element => {
-    const {humidity, feelsLike, cityTitle, temperature, pressure}: any = weatherState
+type WeatherCardType = {
+    weather: weatherStateInterface
+}
+
+export const WeatherCard = ({weather}: WeatherCardType): JSX.Element => {
+    const {humidity, feelsLike, cityTitle, temperature, pressure, timeSunset, timeSunrise}: weatherStateInterface = weather
     return (
         <div className='card-container'>
             <div className='accordion'>
@@ -34,8 +42,8 @@ export const WeatherCard = ({sunset, sunrise, weatherState}: WeatherCardType): J
                                 <span>Давление: {pressure} мм рт ст</span>
                             </div>
                             <div className='card-sun-state'>
-                                <span>Восход солнца: {sunrise}</span>
-                                <span>Закат: {sunset}</span>
+                                <span>Восход солнца: {timeSunrise}</span>
+                                <span>Закат: {timeSunset}</span>
                             </div>
                         </Card>
                     </Col>
