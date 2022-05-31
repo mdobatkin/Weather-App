@@ -1,8 +1,15 @@
 import React from 'react';
 import {WeatherToday} from '../WeatherToday/weatherToday';
+import {AuthContainer} from '../../Auth/AuthContainer';
+import {Route, Routes} from 'react-router-dom';
+import {SignUpContainer} from '../../Auth/signUpContainer';
 
 export const Main = (): JSX.Element => {
     return (
-        <WeatherToday />
+        <Routes>
+            <Route path='/' element={<WeatherToday />}></Route>
+            <Route path='/auth/*' element={<AuthContainer />}></Route>
+            <Route path='/signUp' element={<SignUpContainer />}></Route>
+        </Routes>
     )
 }
