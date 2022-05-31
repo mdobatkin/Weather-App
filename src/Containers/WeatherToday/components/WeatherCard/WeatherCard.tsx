@@ -20,6 +20,7 @@ type WeatherCardType = {
 
 export const WeatherCard = ({weather}: WeatherCardType): JSX.Element => {
     const {humidity, feelsLike, cityTitle, temperature, pressure, timeSunset, timeSunrise}: WeatherStateInterface = weather
+
     return (
         <div className='card-container'>
             <div className='accordion'>
