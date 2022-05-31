@@ -57,15 +57,9 @@ export const WeatherToday = (): JSX.Element => {
     }
 
     return (
-         <div>
-             <SearchBar
-                 filterCity={filterCity}
-             />
-             {weather ?
-                 <WeatherCard
-                 weather={weather}
-             />
-             : <div></div>}
-         </div>
+        <div>
+            <SearchBar filterCity={filterCity} />
+            {!!weather && <WeatherCard weather={weather} />}
+        </div>
     )
 }
