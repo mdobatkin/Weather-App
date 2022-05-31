@@ -4,7 +4,7 @@ import {SearchBar} from './components/searchBar/searchBar';
 import {PreloaderComponent} from '../../Component/preloader/preloader';
 import {getWeatherByCity} from '../../api/weatherAPI';
 import {getWeatherByCoords} from '../../api/weatherAPI';
-import {NavigateComponent} from '../../Component/navigate/navigateContainer';
+import {NavigateComponent} from '../../Component/navigate/navigateComponent';
 
 interface WeatherStateInterface {
     cityTitle: string,
@@ -60,16 +60,9 @@ export const WeatherToday = (): JSX.Element => {
     }
 
     return (
-        <>
-             <NavigateComponent />
-             <SearchBar
-                 filterCity={filterCity}
-             />
-             {weather ?
-                 <WeatherCard
-                 weather={weather}
-             />
-             : <div></div>}
-        </>
+        <div>
+            <SearchBar filterCity={filterCity} />
+            {!!weather && <WeatherCard weather={weather} />}
+        </div>
     )
 }

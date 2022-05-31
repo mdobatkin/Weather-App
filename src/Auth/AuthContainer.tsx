@@ -1,9 +1,10 @@
 import React, {useState} from 'react';
-import {Button, TextInput} from 'react-materialize';
-import {auth} from '../Firebase/firebase';
 import firebase from 'firebase/compat/app';
+import {auth} from '../Firebase/firebase';
 import {useNavigate} from 'react-router-dom';
+import {AuthComponent} from './authComponent';
 import './style/style.css';
+
 
 export const AuthContainer = () => {
     const [password, setPassword] = useState('')
@@ -11,11 +12,11 @@ export const AuthContainer = () => {
     const [user, setUser] = useState<firebase.User | null>(null)
     const navigate = useNavigate();
 
-    function createEmail(email: string) {
+    function onChangeEmail(email: string) {
         setEmail(email)
     }
 
-    function createPassword(password: string) {
+    function onChangePassword(password: string) {
         setPassword(password)
     }
 
@@ -23,52 +24,27 @@ export const AuthContainer = () => {
         return navigate('/signUp')
     }
 
-    const userSignIn = async () => {
+    const signInUser = async () => {
         try {
             const response: firebase.auth.UserCredential = await auth.signInWithEmailAndPassword(email, password)
-            console.log('Аутентификация пройдена успешно:', response)
+
             if (response) {
             setUser(response.user)
-                navigate('/');
+            navigate('/');
             }
+
         } catch (err) {
             JSON.stringify(err)
-            console.log('query is rejected', err)
+            console.log('запрос отклонен, произошла ошибка', err)
         }
     }
 
     return (
-            <div className='auth-container'>
-                <TextInput
-                    email
-                    id="TextInput-39"
-                    label="Email"
-                    validate
-                    onChange={(e) => createEmail(e.target.value)}
-                />
-                <TextInput
-                    id="TextInput-42"
-                    label="Password"
-                    password
-                    onChange={(e) => createPassword(e.target.value)}
-                />
-                <div className='auth-container-btn-group'>
-                    <Button
-                        className='auth-btn'
-                        node="button"
-                        waves="light"
-                        onClick={userSignIn}
-                    >
-                        Sign in</Button>
-                    <Button
-                        className='auth-btn'
-                        node="button"
-                        waves="light"
-                        onClick={redirectSignUp}
-                    >
-                        Sign up</Button>
-                </div>
-            </div>
+        <AuthComponent
+            onChangeEmail={onChangeEmail}
+            onChangePassword={onChangePassword}
+            redirectSignUp={redirectSignUp}
+            signInUser={signInUser}
+        />
         )
 }
-

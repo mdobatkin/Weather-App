@@ -1,7 +1,7 @@
 import React from 'react';
+import {Route, Routes} from 'react-router-dom';
 import {WeatherToday} from '../WeatherToday/weatherToday';
 import {AuthContainer} from '../../Auth/AuthContainer';
-import {Route, Routes} from 'react-router-dom';
 import {SignUpContainer} from '../../Auth/signUpContainer';
 
 export const Main = (): JSX.Element => {

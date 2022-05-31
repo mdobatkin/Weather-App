@@ -3,7 +3,6 @@ import {Icon, Navbar} from 'react-materialize';
 import {NavLink} from 'react-router-dom';
 
 export const NavigateComponent = (): JSX.Element => {
-
     return (
         <Navbar
             alignLinks="right"
