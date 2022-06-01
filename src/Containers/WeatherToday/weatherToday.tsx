@@ -23,16 +23,14 @@ export const WeatherToday = (): JSX.Element => {
     let filterTimeout: NodeJS.Timeout | undefined;
 
     useEffect(() => {
-        locatePosition()
+        getCurrentPosition()
     }, [])
 
     const filterCity = (filterCity: string) => {
         clearTimeout(filterTimeout)
-
         if (!filterCity) {
             setCityFilter('')
         }
-
         filterTimeout = setTimeout( () => {
             void getWeatherByCity(filterCity).then(data => {
                 setWeather(data)
@@ -41,7 +39,7 @@ export const WeatherToday = (): JSX.Element => {
         }, 1500)
     }
 
-    function locatePosition() {
+    function getCurrentPosition(){
         const geolocation: Geolocation = navigator.geolocation
         geolocation.getCurrentPosition(positionHandler as (position: GeolocationPosition) => void,null,{
             enableHighAccuracy: true
