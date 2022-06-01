@@ -4,6 +4,7 @@ import {SearchBar} from './components/searchBar/searchBar';
 import {PreloaderComponent} from '../../Component/preloader/preloader';
 import {getWeatherByCity} from '../../api/weatherAPI';
 import {getWeatherByCoords} from '../../api/weatherAPI';
+import {NavigateComponent} from '../../Component/navigate/navigateComponent';
 
 interface WeatherStateInterface {
     cityTitle: string,
